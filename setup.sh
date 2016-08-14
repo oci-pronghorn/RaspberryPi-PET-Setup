@@ -3,7 +3,7 @@
 sudo apt-get update
 
 #install maven
-sudo apt-get install maven
+sudo apt-get --assume-yes install maven
 
 #copy workspace
 cp -R workspace ~/workspace
@@ -13,7 +13,8 @@ cp -R workspace ~/workspace
 #makes that superfluous
 
 #hook into the sysem once and we have all the needed resources
-mvn -gs ./settings.xml archetype:generate -DarchetypeGroupId=com.ociweb.iot.archetype -DarchetypeArtifactId=PronghornIoT-Archetype -DarchetypeVersion=0.0.1 -DgroupId=com.dexterindustries.grovepi.project -DartifactId=setupValidator -Dversion=1.0-SNAPSHOT -Dpackage=com.dexterindustries.grovepi.project.setupValidator -DinteractiveMode=false
+mvn -s ./settings.xml archetype:generate -DarchetypeGroupId=com.ociweb.iot.archetype -DarchetypeArtifactId=PronghornIoT-Archetype -DarchetypeVersion=0.0.1 -DgroupId=com.dexterindustries.grovepi.project -DartifactId=setupValidator -Dversion=1.0-SNAPSHOT -Dpackage=com.dexterindustries.grovepi.project.setupValidator -DinteractiveMode=false -DarchetypeRepository=https://repository-pronghorn.forge.cloudbees.com/release
+
 
 cd setupValidator
 mvn install
