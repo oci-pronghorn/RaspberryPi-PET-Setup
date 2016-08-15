@@ -1,12 +1,12 @@
 #!/usr/bin/bash
 
-sudo apt-get update
+#sudo apt-get update
 
 #install maven
-sudo apt-get --assume-yes install maven
+#sudo apt-get --assume-yes install maven
 
 #copy workspace
-cp -R workspace ~/workspace
+#cp -R javaLessons ~/javaLessons
 
 #project contains 'settings.xml'.  The repositories found within should be place
 #inside the ~\.m2\settings.xml file. The steps below however preload the jars and 
@@ -21,7 +21,7 @@ mvn install
 cd ..
 
 #adding helper script to root of user folder
-cp ./createProject.sh ~/createProject.sh
+#cp ./createProject.sh ~/createProject.sh
 
 
 
