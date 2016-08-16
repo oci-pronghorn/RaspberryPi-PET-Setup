@@ -1,8 +1,8 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 sudo apt-get update
 
-install maven
+#install maven
 sudo apt-get --assume-yes install maven
 
 #copy workspace
