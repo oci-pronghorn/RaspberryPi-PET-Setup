@@ -11,7 +11,7 @@ sudo ln -s /opt/apache-maven-3.3.9/bin/mvnDebug /usr/bin/mvnDebug
 rm ./apache-maven-3.3.9-bin.tar.gz
 
 # install geany ide
-sudo apt-get install geany
+sudo apt-get --assume-yes install geany
 
 # add mvn support
 python ./geany_mvn_conf.py
