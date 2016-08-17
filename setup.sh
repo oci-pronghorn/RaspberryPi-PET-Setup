@@ -4,7 +4,7 @@ sudo apt-get update
 
 # install maven
 wget http://mirrors.advancedhosters.com/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
-sudo tar -xvzf ~/apache-maven-3.3.9-bin.tar.gz
+sudo tar -xvzf ./apache-maven-3.3.9-bin.tar.gz
 sudo mv ./apache-maven-3.3.9 /opt
 sudo ln -s /opt/apache-maven-3.3.9/bin/mvn /usr/bin/mvn
 sudo ln -s /opt/apache-maven-3.3.9/bin/mvnDebug /usr/bin/mvnDebug
