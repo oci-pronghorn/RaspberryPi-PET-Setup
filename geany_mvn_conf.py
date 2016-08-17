@@ -8,6 +8,9 @@ CONF_FILE = 'geany.conf'
 CONF_PATH = '%s/%s' % (CONF_DIR, CONF_FILE)
 
 config=ConfigParser.RawConfigParser()
+# preserve case of key strings
+config.optionxform = str
+
 config.add_section('build-menu')
 config.set('build-menu','NF_00_LB','_Compile')
 config.set('build-menu','NF_00_CM','mvn compile')
