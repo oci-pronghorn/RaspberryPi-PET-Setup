@@ -11,6 +11,9 @@ config=ConfigParser.RawConfigParser()
 # preserve case of key strings
 config.optionxform = str
 
+config.add_section('project')
+config.set('project','project_file_path','/home/pi/javaLessons/answers')
+
 config.add_section('build-menu')
 config.set('build-menu','NF_00_LB','_Compile')
 config.set('build-menu','NF_00_CM','mvn compile')
