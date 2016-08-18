@@ -24,9 +24,9 @@ long_line_column=72
 
 [files]
 current_page=0
+current_page=1
 FILE_NAME_0=0;Java;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FjavaLessons%2Fanswers%2F002-Metronome%2Fsrc%2Fmain%2Fjava%2Fcom%2Fociweb%2Fiot%2Fmetronome%2FIoTApp.java;0;4
 FILE_NAME_1=0;Java;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FjavaLessons%2Fanswers%2F002-Metronome%2Fsrc%2Fmain%2Fjava%2Fcom%2Fociweb%2Fiot%2Fmetronome%2FMetronomeBehavior.java;0;4
-
 
 [VTE]
 last_dir=/home/pi/javaLessons/answers/002-Metronome
