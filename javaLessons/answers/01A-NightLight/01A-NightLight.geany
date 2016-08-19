@@ -45,4 +45,8 @@ NF_03_WD=%p
 EX_00_LB=_Execute
 EX_00_CM=java -jar "target/01A-NightLight.jar"
 EX_00_WD=%p
+JavaFT_00_LB=_Compile
+JavaFT_00_CM=mvn compile
+JavaFT_00_WD=%p
+filetypes=Java;
 
