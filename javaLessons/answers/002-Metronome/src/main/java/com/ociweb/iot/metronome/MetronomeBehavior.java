@@ -6,6 +6,7 @@ import com.ociweb.iot.maker.CommandChannel;
 import com.ociweb.iot.maker.DigitalListener;
 import com.ociweb.iot.maker.DeviceRuntime;
 import com.ociweb.iot.maker.PayloadReader;
+import com.ociweb.iot.maker.Port;
 import com.ociweb.iot.maker.PubSubListener;
 import com.ociweb.iot.maker.StartupListener;
 import com.ociweb.iot.maker.TimeListener;
@@ -75,7 +76,7 @@ public class MetronomeBehavior implements AnalogListener, PubSubListener, Startu
 
     //we will talk about override
     @Override
-    public void analogEvent(int connector, long time, long durationMillis, int average, int value) {  	    
+    public void analogEvent(Port port, long time, long durationMillis, int average, int value) { 
     	requestedPBM=  BBM_SLOWEST + ((BBM_VALUES*average)/MAX_ANGLE_VALUE);       //math value, long, int, beat at the right (primitive work) order of operation  
         requestDuration = durationMillis;    
     }    
@@ -86,19 +87,26 @@ public class MetronomeBehavior implements AnalogListener, PubSubListener, Startu
     	
         if (requestedPBM>0) {
 
-            if (activeBPM != requestedPBM && (requestDuration > 200 || activeBPM==0) ) {
+            if (activeBPM != requestedPBM && (requestDuration > 100 || activeBPM==0) ) {
+            	System.out.println("new rate of "+requestedPBM);
             	activeBPM = requestedPBM;
                 base = System.currentTimeMillis(); //this is a standard java they should know. 1970 UMT
                 beatIdx = 0;
-            }                
+            }  else {
+            	if (activeBPM != requestedPBM) {
+            		System.err.println("no change to "+requestedPBM+" duration "+requestDuration);
+            	}
+            	
+            }
                                     
             long delta = (++beatIdx*60_000)/activeBPM;//will multiple the pre incremental value if do after 
             long until = base + delta;
-            tickCommandChannel.digitalPulse(IoTApp.BUZZER_CONNECTION,500_000);     
-            tickCommandChannel.blockUntil(IoTApp.BUZZER_CONNECTION, until); //mark connection as blocked until
+            tickCommandChannel.digitalPulse(IoTApp.BUZZER_PORT,500_000);     
+            tickCommandChannel.blockUntil(IoTApp.BUZZER_PORT, until); //mark connection as blocked until
             
 
             if (beatIdx==activeBPM) {
+            	System.out.println("new minute rollover "+System.currentTimeMillis());
             	beatIdx = 0;
             	base += 60_000; //will talk about the operator 
             }

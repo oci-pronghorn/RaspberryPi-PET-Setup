@@ -1,4 +1,4 @@
-package com.ociweb.iot.project.lightblink;
+package com.ociweb.iot.lightblink;
 
 import static com.ociweb.iot.grove.GroveTwig.Button;
 import static com.ociweb.iot.grove.GroveTwig.LED;
@@ -7,12 +7,14 @@ import com.ociweb.iot.maker.CommandChannel;
 import com.ociweb.iot.maker.DeviceRuntime;
 import com.ociweb.iot.maker.Hardware;
 import com.ociweb.iot.maker.IoTSetup;
+import com.ociweb.iot.maker.Port;
+
+import static com.ociweb.iot.maker.Port.*;
 
 
 public class IoTApp implements IoTSetup {
            
-	 public static final int LED_PORT = 4;
-	 public static final int BUTTON_PORT = 3;
+	public static Port LED_PORT = D4;
 	
     public static void main( String[] args) {
         DeviceRuntime.run(new IoTApp());
@@ -20,8 +22,8 @@ public class IoTApp implements IoTSetup {
     
     @Override
     public void declareConnections(Hardware hardware) {
-        hardware.connectDigital(LED, LED_PORT);
-        hardware.connectDigital(Button, BUTTON_PORT);
+        hardware.connect(LED, LED_PORT);
+        hardware.connect(Button, D3);
     }
 
     @Override
@@ -31,7 +33,7 @@ public class IoTApp implements IoTSetup {
         
         runtime.addDigitalListener((connection,time,durationMillis, value)->{
         	
-            ledChannel.digitalSetValue(5,value);
+            ledChannel.setValue(LED_PORT,value);
         	        	
         });
               
