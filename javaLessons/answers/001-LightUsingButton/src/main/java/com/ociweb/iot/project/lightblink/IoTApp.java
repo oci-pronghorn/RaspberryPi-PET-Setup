@@ -11,14 +11,17 @@ import com.ociweb.iot.maker.IoTSetup;
 
 public class IoTApp implements IoTSetup {
            
+	 public static final int LED_PORT = 4;
+	 public static final int BUTTON_PORT = 3;
+	
     public static void main( String[] args) {
         DeviceRuntime.run(new IoTApp());
     }    
     
     @Override
     public void declareConnections(Hardware hardware) {
-        hardware.connectDigital(LED, 5);
-        hardware.connectDigital(Button, 6);
+        hardware.connectDigital(LED, LED_PORT);
+        hardware.connectDigital(Button, BUTTON_PORT);
     }
 
     @Override
