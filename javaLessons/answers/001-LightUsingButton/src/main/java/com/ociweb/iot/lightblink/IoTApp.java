@@ -14,7 +14,8 @@ import static com.ociweb.iot.maker.Port.*;
 
 public class IoTApp implements IoTSetup {
            
-	public static Port LED_PORT = D4;
+    public static Port LED_PORT = D8;
+    public static Port BUTTON_PORT = D3;
 	
     public static void main( String[] args) {
         DeviceRuntime.run(new IoTApp());
@@ -23,7 +24,7 @@ public class IoTApp implements IoTSetup {
     @Override
     public void declareConnections(Hardware hardware) {
         hardware.connect(LED, LED_PORT);
-        hardware.connect(Button, D3);
+        hardware.connect(Button, BUTTON_PORT);
     }
 
     @Override
