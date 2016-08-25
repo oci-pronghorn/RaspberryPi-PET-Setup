@@ -14,6 +14,9 @@ config.optionxform = str
 config.add_section('project')
 config.set('project','project_file_path','/home/pi/javaLessons/answers')
 
+config.add_section('VTE')
+config.set('VTE','run_in_vte','true')
+
 config.add_section('build-menu')
 config.set('build-menu','NF_00_LB','_Compile')
 config.set('build-menu','NF_00_CM','mvn compile --offline -quiet')
