@@ -1,6 +1,5 @@
 package com.ociweb.iot.track1;
 
-
 import static com.ociweb.iot.grove.GroveTwig.AngleSensor;
 import static com.ociweb.iot.grove.GroveTwig.LightSensor;
 
@@ -13,34 +12,30 @@ import com.ociweb.iot.maker.IoTSetup;
 import static com.ociweb.iot.maker.Port.A2;
 import static com.ociweb.iot.maker.Port.A1;
 
-
 /**
  * As it gets dark the back light of the LCD comes on.
  * Angle sensor is used for brightness adjustment
  */
 
-public class IoTApp implements IoTSetup
-{
+public class IoTApp implements IoTSetup {
 	int brightness;
 	
     public static void main( String[] args ) {
         DeviceRuntime.run(new IoTApp());
     }
-    
-    
+        
     @Override
     public void declareConnections(Hardware c) {
     	
     	c.connect(LightSensor, A2);
     	c.connect(AngleSensor, A1);
     	c.useI2C();
+    
     }
-
 
     @Override
     public void declareBehavior(DeviceRuntime runtime) {
-        
-        	
+                	
     	final CommandChannel commandChannel = runtime.newCommandChannel();
     	runtime.addAnalogListener((port, time, durationMillis, average, value)->{
  
@@ -58,7 +53,7 @@ public class IoTApp implements IoTSetup
 	    			int level = Math.min(255, (brightness * darknessValue )/10);
 
 	    			Grove_LCD_RGB.commandForColor(commandChannel, level, level, level);	    			
-	    				    			
+	
 	    			break;
 	    		
 	    		case A1:	    			
