@@ -19,13 +19,6 @@ config.add_section('VTE')
 config.set('VTE','run_in_vte','true')
 
 config.add_section('build-menu')
-config.set('build-menu','JavaFT_00_LB','_Compile')
-config.set('build-menu','JavaFT_00_CM','mvn compile --offline -quiet')
-config.set('build-menu','JavaFT_00_WD','%p')
-config.set('build-menu','JavaFT_01_LB','_Install')
-config.set('build-menu','JavaFT_01_CM','mvn install --offline -quiet')
-config.set('build-menu','JavaFT_01_WD','%p')
-
 config.set('build-menu','error_regex','\[ERROR\] ([^:\[]+):?\[([0-9]+)')
 
 if not os.path.exists(CONF_DIR):
