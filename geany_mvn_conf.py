@@ -17,6 +17,8 @@ config.set('project','session_file','/home/pi/javaLessons/answers/001-LightUsing
 
 config.add_section('VTE')
 config.set('VTE','run_in_vte','true')
+config.set('VTE','skip_run_script','true')
+
 
 config.add_section('build-menu')
 config.set('build-menu','error_regex','\[ERROR\] ([^:\[]+):?\[([0-9]+)')
