@@ -13,6 +13,7 @@ config.optionxform = str
 
 config.add_section('project')
 config.set('project','project_file_path','/home/pi/javaLessons/answers')
+config.set('project','session_file','/home/pi/javaLessons/answers/001-LightUsingButton/001-LightUsingButton.geany')
 
 config.add_section('VTE')
 config.set('VTE','run_in_vte','true')
