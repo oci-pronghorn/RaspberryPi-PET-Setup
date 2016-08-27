@@ -26,5 +26,7 @@ cd setupValidator
 mvn install
 cd ..
 
+rm -R -f setupValidator
+
 # adding helper script to root of user folder
 #cp ./createProject.sh ~/createProject.sh
