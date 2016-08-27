@@ -32,26 +32,8 @@ FILE_NAME_1=0;Java;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FjavaLessons%2Fanswers%2F002-Met
 last_dir=/home/pi/javaLessons/answers/002-Metronome
 
 [build-menu]
-NF_00_LB=_Compile
-NF_00_CM=mvn compile
-NF_00_WD=%p
-NF_01_LB=_Other targets
-NF_01_CM=mvn
-NF_01_WD=%p
-NF_02_LB=_Test
-NF_02_CM=mvn test
-NF_02_WD=%p
-NF_03_LB=_Install
-NF_03_CM=mvn install
-NF_03_WD=%p
 EX_00_LB=_Execute
 EX_00_CM=java -jar "target/002-Metronome.jar"
 EX_00_WD=%p
-EX_01_LB=
-EX_01_CM=
-EX_01_WD=
-JavaFT_00_LB=_Compile
-JavaFT_00_CM=mvn compile
-JavaFT_00_WD=%p
 filetypes=Java;
 

@@ -27,28 +27,10 @@ current_page=0
 FILE_NAME_0=367;Java;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FjavaLessons%2Fanswers%2F001-LightUsingButton%2Fsrc%2Fmain%2Fjava%2Fcom%2Fociweb%2Fiot%2Flightblink%2FIoTApp.java;0;4
 
 [VTE]
-last_dir=/home/pi/pronghorn/PronghornIoT-Examples/000-BlinkyLambdas
+last_dir=/home/pi/javaLessons/answers/001-LightUsingButton
 
 [build-menu]
-NF_00_LB=_Compile
-NF_00_CM=mvn compile
-NF_00_WD=%p
-NF_01_LB=_Other targets
-NF_01_CM=mvn
-NF_01_WD=%p
-NF_02_LB=_Test
-NF_02_CM=mvn test
-NF_02_WD=%p
-NF_03_LB=_Install
-NF_03_CM=mvn install
-NF_03_WD=%p
 EX_00_LB=_Execute
 EX_00_CM=java -jar  "target/001-LightUsingButton.jar"
 EX_00_WD=%p
-EX_01_LB=
-EX_01_CM=
-EX_01_WD=
-JavaFT_00_LB=_Compile
-JavaFT_00_CM=mvn compile
-JavaFT_00_WD=%p
 filetypes=Java;

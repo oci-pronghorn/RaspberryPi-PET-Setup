@@ -58,7 +58,7 @@ public class IoTApp implements IoTSetup {
 	    		
 	    		case A1:	    			
 	    			
-	    		    brightness = ((AngleSensor.range()/2) * value)/AngleSensor.range();    	
+	    		    brightness = value*512/AngleSensor.range();    	
 	    			
 	    			break;	    		
     		
