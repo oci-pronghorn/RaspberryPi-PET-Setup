@@ -20,7 +20,7 @@ python ./geany_mvn_conf.py
 cp -R javaLessons ~/javaLessons
 
 #hook into the system once and we have all the needed resources
-mvn -s ./settings.xml archetype:generate -DarchetypeGroupId=com.ociweb.iot.archetype -DarchetypeArtifactId=PronghornIoT-Archetype -DarchetypeVersion=0.0.4 -DgroupId=com.dexterindustries.grovepi.project -DartifactId=setupValidator -Dversion=1.0-SNAPSHOT -Dpackage=com.dexterindustries.grovepi.project.setupValidator -DinteractiveMode=false -DarchetypeRepository=https://repository-pronghorn.forge.cloudbees.com/release
+mvn -s ./settings.xml archetype:generate -DarchetypeGroupId=com.ociweb.iot.archetype -DarchetypeArtifactId=PronghornIoT-Archetype -DarchetypeVersion=0.0.5 -DgroupId=com.dexterindustries.grovepi.project -DartifactId=setupValidator -Dversion=1.0-SNAPSHOT -Dpackage=com.dexterindustries.grovepi.project.setupValidator -DinteractiveMode=false -DarchetypeRepository=https://repository-pronghorn.forge.cloudbees.com/release
 
 cd setupValidator
 mvn install
@@ -29,4 +29,4 @@ cd ..
 rm -R -f setupValidator
 
 # adding helper script to root of user folder
-#cp ./createProject.sh ~/createProject.sh
+cp ./createProject.sh ~/createProject.sh
