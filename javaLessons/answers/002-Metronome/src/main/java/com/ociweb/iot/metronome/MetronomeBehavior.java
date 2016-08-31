@@ -10,6 +10,7 @@ import com.ociweb.iot.maker.Port;
 import com.ociweb.iot.maker.PubSubListener;
 import com.ociweb.iot.maker.StartupListener;
 import com.ociweb.iot.maker.TimeListener;
+import static com.ociweb.iot.grove.GroveTwig.AngleSensor;
 
 /*
  * Beats per minute   (build an ENUM of these so we can display the names on the screen.
@@ -44,8 +45,7 @@ public class MetronomeBehavior implements AnalogListener, PubSubListener, Startu
     private static final int BBM_SLOWEST     = 40;
     private static final int BBM_FASTEST     = 208;
     
-    private static final int BBM_VALUES      = 1+BBM_FASTEST-BBM_SLOWEST;
-    private static final int MAX_ANGLE_VALUE = 1024;
+    private static final int BBM_VALUES      = 1+BBM_FASTEST-BBM_SLOWEST;    
     
     private int  requestedPBM;
     private long requestDuration;
@@ -72,7 +72,7 @@ public class MetronomeBehavior implements AnalogListener, PubSubListener, Startu
 
     @Override
     public void analogEvent(Port port, long time, long durationMillis, int average, int value) { 
-    	requestedPBM=  BBM_SLOWEST + ((BBM_VALUES*average)/MAX_ANGLE_VALUE);   
+    	requestedPBM=  BBM_SLOWEST + ((BBM_VALUES*average)/AngleSensor.range());   
         requestDuration = durationMillis;    
     }    
 
