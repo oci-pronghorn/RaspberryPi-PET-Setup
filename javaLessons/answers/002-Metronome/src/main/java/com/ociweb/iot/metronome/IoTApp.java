@@ -4,7 +4,7 @@ package com.ociweb.iot.metronome;
 import static com.ociweb.iot.grove.simple_analog.SimpleAnalogTwig.AngleSensor;
 import static com.ociweb.iot.grove.simple_digital.SimpleDigitalTwig.Buzzer;
 import static com.ociweb.iot.maker.Port.A1;
-import static com.ociweb.iot.maker.Port.D2;
+import static com.ociweb.iot.maker.Port.D4;
 
 import com.ociweb.iot.maker.FogApp;
 import com.ociweb.iot.maker.FogRuntime;
@@ -14,7 +14,7 @@ import com.ociweb.iot.maker.Port;
 public class IoTApp implements FogApp {
     
     public static final Port ROTARY_ANGLE_PORT = A1;
-    public static final Port BUZZER_PORT = D2;    
+    public static final Port BUZZER_PORT = D4;    
     
     public static void main( String[] args ) {
         FogRuntime.run(new IoTApp());

@@ -3,7 +3,7 @@ package com.ociweb.iot.lightblink;
 import static com.ociweb.iot.grove.simple_digital.SimpleDigitalTwig.Button;
 import static com.ociweb.iot.grove.simple_digital.SimpleDigitalTwig.LED;
 import static com.ociweb.iot.maker.Port.D3;
-import static com.ociweb.iot.maker.Port.D4;
+import static com.ociweb.iot.maker.Port.D2;
 
 import com.ociweb.gl.api.GreenCommandChannel;
 import com.ociweb.iot.maker.FogApp;
