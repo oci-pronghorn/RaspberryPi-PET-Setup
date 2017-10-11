@@ -1,36 +1,37 @@
 package com.ociweb.iot.lightblink;
 
-import static com.ociweb.iot.grove.GroveTwig.Button;
-import static com.ociweb.iot.grove.GroveTwig.LED;
+import static com.ociweb.iot.grove.simple_digital.SimpleDigitalTwig.Button;
+import static com.ociweb.iot.grove.simple_digital.SimpleDigitalTwig.LED;
+import static com.ociweb.iot.maker.Port.D3;
+import static com.ociweb.iot.maker.Port.D4;
 
-import com.ociweb.iot.maker.CommandChannel;
-import com.ociweb.iot.maker.DeviceRuntime;
+import com.ociweb.gl.api.GreenCommandChannel;
+import com.ociweb.iot.maker.FogApp;
+import com.ociweb.iot.maker.FogCommandChannel;
+import com.ociweb.iot.maker.FogRuntime;
 import com.ociweb.iot.maker.Hardware;
-import com.ociweb.iot.maker.IoTSetup;
 import com.ociweb.iot.maker.Port;
 
-import static com.ociweb.iot.maker.Port.*;
 
-
-public class IoTApp implements IoTSetup {
+public class IoTApp implements FogApp {
            
-    public static Port LED_PORT = D8;
-    public static Port BUTTON_PORT = D3;
+	public static Port LED_PORT = D3;
 	
     public static void main( String[] args) {
-        DeviceRuntime.run(new IoTApp());
+        FogRuntime.run(new IoTApp());
     }    
     
     @Override
     public void declareConnections(Hardware hardware) {
         hardware.connect(LED, LED_PORT);
-        hardware.connect(Button, BUTTON_PORT);
+        hardware.connect(Button, D2);        
     }
 
     @Override
-    public void declareBehavior(DeviceRuntime runtime) {
+    public void declareBehavior(FogRuntime runtime) {
         
-        final CommandChannel ledChannel = runtime.newCommandChannel(); 
+        final FogCommandChannel ledChannel = runtime.newCommandChannel(
+        		GreenCommandChannel.DYNAMIC_MESSAGING | FogRuntime.PIN_WRITER); 
         
         runtime.addDigitalListener((connection,time,durationMillis, value)->{
         	

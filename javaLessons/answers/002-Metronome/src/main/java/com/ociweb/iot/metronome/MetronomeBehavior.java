@@ -1,19 +1,18 @@
 package com.ociweb.iot.metronome;
 
-import com.ociweb.iot.grove.Grove_LCD_RGB;
+import com.ociweb.gl.api.GreenCommandChannel;
+import com.ociweb.gl.api.PubSubListener;
+import com.ociweb.gl.api.StartupListener;
+import com.ociweb.gl.api.TimeListener;
+import com.ociweb.iot.grove.lcd_rgb.Grove_LCD_RGB;
 import com.ociweb.iot.maker.AnalogListener;
-import com.ociweb.iot.maker.CommandChannel;
-import com.ociweb.iot.maker.DigitalListener;
-import com.ociweb.iot.maker.DeviceRuntime;
-import com.ociweb.iot.maker.PayloadReader;
+import com.ociweb.iot.maker.FogCommandChannel;
+import com.ociweb.iot.maker.FogRuntime;
 import com.ociweb.iot.maker.Port;
-import com.ociweb.iot.maker.PubSubListener;
-import com.ociweb.iot.maker.StartupListener;
-import com.ociweb.iot.maker.TimeListener;
-import static com.ociweb.iot.grove.GroveTwig.AngleSensor;
+import com.ociweb.pronghorn.pipe.ChannelReader;
 
 /*
- * Beats per minute   (build an ENUM of these so we can display the names on the screen.
+ * Beats per minute   (build an ENUM of these so we can diplay the names on the screen.
  * 
  * Largo 40-60
  * Larghetto 60-66
@@ -37,18 +36,21 @@ import static com.ociweb.iot.grove.GroveTwig.AngleSensor;
 
 public class MetronomeBehavior implements AnalogListener, PubSubListener, StartupListener, TimeListener {
 
-    private final CommandChannel tickCommandChannel;
-    private final CommandChannel screenCommandChannel;
+    private final FogCommandChannel tickCommandChannel;
+    private final FogCommandChannel screenCommandChannel;
     
     private final String topic = "tick";
-              
-    private static final int BBM_SLOWEST     = 40;
+          
+    private static final int REQ_UNCHANGED_MS = 120;
+    
+    private static final int BBM_SLOWEST     = 40; 
     private static final int BBM_FASTEST     = 208;
     
-    private static final int BBM_VALUES      = 1+BBM_FASTEST-BBM_SLOWEST;    
+    private static final int BBM_VALUES      = 1+BBM_FASTEST-BBM_SLOWEST;
+    private static final int MAX_ANGLE_VALUE = 1024;
     
     private int  requestedPBM;
-    private long requestDuration;
+    private long requestTime;
     
     private long base;
     private int beatIdx; 
@@ -56,15 +58,15 @@ public class MetronomeBehavior implements AnalogListener, PubSubListener, Startu
     
     private int showingBPM;
     
-    public MetronomeBehavior(DeviceRuntime runtime) {
-        this.tickCommandChannel = runtime.newCommandChannel();
-        this.screenCommandChannel = runtime.newCommandChannel();
+    public MetronomeBehavior(FogRuntime runtime) {
+        this.tickCommandChannel = runtime.newCommandChannel(GreenCommandChannel.DYNAMIC_MESSAGING | FogRuntime.I2C_WRITER | FogRuntime.PIN_WRITER);
+        this.screenCommandChannel = runtime.newCommandChannel(GreenCommandChannel.DYNAMIC_MESSAGING | FogRuntime.I2C_WRITER | FogRuntime.PIN_WRITER);
     }
 
     @Override
     public void startup() {
         tickCommandChannel.subscribe(topic,this); 
-        tickCommandChannel.openTopic(topic).publish();
+        tickCommandChannel.publishTopic(topic,w->{});
         
         Grove_LCD_RGB.commandForColor(tickCommandChannel, 255, 255, 255);
         
@@ -72,27 +74,25 @@ public class MetronomeBehavior implements AnalogListener, PubSubListener, Startu
 
     @Override
     public void analogEvent(Port port, long time, long durationMillis, int average, int value) { 
-    	requestedPBM=  BBM_SLOWEST + ((BBM_VALUES*average)/AngleSensor.range());   
-        requestDuration = durationMillis;    
+    	requestedPBM =  BBM_SLOWEST + ((BBM_VALUES*average)/MAX_ANGLE_VALUE);   
+    	requestTime = time; 
     }    
 
     @Override
-    public void message(CharSequence topic, PayloadReader payload) {
-        
-    	
+    public boolean message(CharSequence topic, ChannelReader payload) {
+            	
         if (requestedPBM>0) {
 
-            if (activeBPM != requestedPBM && (requestDuration > 100 || activeBPM==0) ) {
-            	
+            if (activeBPM != requestedPBM && ((System.currentTimeMillis()-requestTime) > REQ_UNCHANGED_MS || activeBPM==0) ) {
             	activeBPM = requestedPBM;
-                base = System.currentTimeMillis();
+                base = System.currentTimeMillis(); 
                 beatIdx = 0;
             } 
                                     
             long delta = (++beatIdx*60_000)/activeBPM;
             long until = base + delta;
             tickCommandChannel.digitalPulse(IoTApp.BUZZER_PORT,500_000);     
-            tickCommandChannel.blockUntil(IoTApp.BUZZER_PORT, until); 
+            tickCommandChannel.blockUntil(IoTApp.BUZZER_PORT, until);
             
 
             if (beatIdx==activeBPM) {
@@ -101,13 +101,14 @@ public class MetronomeBehavior implements AnalogListener, PubSubListener, Startu
             }
             
         }
-        tickCommandChannel.openTopic(topic).publish();//request next tick
+        tickCommandChannel.publishTopic(topic,w->{});//request next tick
         
+        return true;
     }
 
 
     @Override
-    public void timeEvent(long time) {
+    public void timeEvent(long time, int iteration) {
        if (requestedPBM != showingBPM) {
                       
            String tempo;
@@ -130,6 +131,7 @@ public class MetronomeBehavior implements AnalogListener, PubSubListener, Startu
                bpm = "0"+bpm;
            }
            
+           //second channel is used so we are left waiting for one cycle of the ticks before we can update.
            if (Grove_LCD_RGB.commandForText(screenCommandChannel, bpm+"-"+tempo)) {
                showingBPM = requestedPBM;
            }
